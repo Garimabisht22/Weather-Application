@@ -1,64 +1,61 @@
+import 'package:clima/screens/location_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:clima/services/location.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:clima/services/weather.dart';
 
-const kApiKey = '953144532f238f23099574e828b7e991';
+
 class LoadingScreen extends StatefulWidget {
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
-
 class _LoadingScreenState extends State<LoadingScreen> {
-  double latitude;
-  double longitude;
   @override
-
   void initState() {
     super.initState();
-    getLocation();
+    print('Initialised the state');
+    print('Initialising getLocationData ');
+    getLocationData();
   }
 
-  void getLocation() async {
-    Location location = Location();
-    await location.getCurrentLocation();
-    longitude= location.longitude;
-    latitude = location.latitude;
-    getData();
-  }
-
-  void getData() async {
-    var url = Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$kApiKey');
-    var response = await http.post(url, body: {
-    });
-    print(response.statusCode );
-    //  Response response = await get('https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22';
-
-    if (response.statusCode == 200) {
-      String data = response.body;
-      var temp = jsonDecode(data)['main']['temp'];
-      print(temp);
-
-      var id = jsonDecode(data)['weather'][0]['id'];
-      print(id);
-
-      var city = jsonDecode(data)['name'];
-      print(city);
-
-    } else{
-      print(response.statusCode);
-    }
+  void getLocationData() async {
+   var weatherData =  await WeatherModel().getLocationWeather();
+  // Future.delayed(const Duration(milliseconds: 500), () {
+     Navigator.push(context, MaterialPageRoute(builder: (context) {
+       print('entering');
+       return LocationScreen(weatherData);
+     })
+     );
+   //});
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-          },
-          child: Text('Get Location'),
+      appBar: AppBar(
+        title: Center(
+          child: Text('Clima',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 40,
+              fontFamily:'Pacifico',
+          ),
+          ),
         ),
+        backgroundColor: Colors.pinkAccent,
       ),
+      backgroundColor: Colors.white,
+       body: Column(
+         children: [
+           Icon(Icons.cloud,
+           color: Colors.lightBlueAccent[50],
+           size: 340,),
+           spin
+         ],
+       )
     );
   }
 }
+const spin = SpinKitWanderingCubes(
+  color: Colors.pinkAccent,
+  size: 250.0,
+  //lineWidth: 30,
+);
