@@ -12,20 +12,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    print('Initialised the state');
-    print('Initialising getLocationData ');
     getLocationData();
   }
 
   void getLocationData() async {
    var weatherData =  await WeatherModel().getLocationWeather();
-  // Future.delayed(const Duration(milliseconds: 500), () {
      Navigator.push(context, MaterialPageRoute(builder: (context) {
-       print('entering');
        return LocationScreen(weatherData);
      })
      );
-   //});
   }
 
   Widget build(BuildContext context) {

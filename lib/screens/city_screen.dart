@@ -5,7 +5,6 @@ class CityScreen extends StatefulWidget {
   @override
   _CityScreenState createState() => _CityScreenState();
 }
-
 class _CityScreenState extends State<CityScreen> {
   String cityName ;
   @override

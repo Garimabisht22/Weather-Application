@@ -17,7 +17,6 @@ class _LocationScreenState extends State<LocationScreen> {
   String city;
   String weatherMessage;
   WeatherModel weather = WeatherModel();
-  // String weatherTitle;
 
   @override
   void initState() {
@@ -36,21 +35,14 @@ class _LocationScreenState extends State<LocationScreen> {
       }
       double temp = weatherData['main']['temp'];
       temperature = temp.toInt();
-      //  print(temp);
       var condition = weatherData['weather'][0]['id'];
-
-      print(condition);
       weatherIcon = weather.getWeatherIcon(condition);
-      print(weatherIcon);
       weatherMessage = weather.getMessage(weatherIcon);
-      print(weatherMessage);
       city = weatherData['name'];
     });
-    // print(city);
   }
 
   Widget build(BuildContext context) {
-    print('entered next screen');
     return Scaffold(
       resizeToAvoidBottomInset: false, // set it to false
       body: Container(
@@ -65,7 +57,6 @@ class _LocationScreenState extends State<LocationScreen> {
         ),
         child: SafeArea(
           child: Column(
-            ////  mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Row(
@@ -86,10 +77,8 @@ class _LocationScreenState extends State<LocationScreen> {
                     onPressed: () async{
                       var typeName = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        print('entering');
                         return CityScreen();
                       }));
-                      print(typeName);
                       if (typeName != null)  {
                        var cityTempData =await weather.getCityWeather(typeName);
                        updateUI(cityTempData);
