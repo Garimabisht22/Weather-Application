@@ -1,6 +1,16 @@
 # clima
 
 A live weather Flutter application.
+This app shows current weather temperaure according to your latitude and logitude.
+It also provides weather temperature of any city you want.
+
+Here is a sample of the app. Please give it a look.
+
+
+
+https://user-images.githubusercontent.com/51168410/119609064-95fde580-be14-11eb-9d63-ae8d2cceaed8.mp4
+
+
 
 ## Getting Started
 
